@@ -1,17 +1,20 @@
 from chatterbot import ChatBot
-
-bot = ChatBot(
-    'Irineu',
-    storage_adapter='chatterbot.storage.SQLStorageAdapter',
-    database_uri='sqlite:///database.sqlite3'
-    )
+from chatterbot.trainers import ListTrainer
+bot = ChatBot('Charlie')
+#bot = ChatBot(
+#    'Charlie',
+ #   storage_adapter='chatterbot.storage.SQLStorageAdapter',
+  #  database_uri='sqlite:///database.sqlite3'
+   # )
+    
+trainer = ListTrainer(bot)
+trainer.train([
+    'Olá?',
+    'Olá, tudo bem?',
+    'Vou bem, e você?',
+])
 
 while True:
-    try:
-        resposta = bot.get_response(input("Usuário: "))
-        if float(resposta.confidence) > 0.5:
-            print("Irineu: ", resposta)
-        else:
-            print("Eu não entendi :(")
-    except(KeyboardInterrupt, EOFError, SystemExit):
-        break
+    request = input('Usuário: ')
+    response = bot.get_response(request)
+    print('Bot: ', response)
